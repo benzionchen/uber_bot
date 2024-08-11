@@ -24,15 +24,17 @@ def visit_uber(num_visits):
 
         # Keep the browser open for manual login or further interaction
         print("The browser will remain open for manual login. Press Ctrl+C to exit the script.")
-        # Wait for a long time to keep the window open
-        context.pages[0].wait_for_timeout(600000)
+
+        # Check if there are any pages before trying to access the first one
+        if context.pages:
+            context.pages[0].wait_for_timeout(600000)  # Wait for 10 minutes
+        else:
+            print("No pages are open in the context to wait on.")
 
         browser.close()
 
 
 # Set the number of visits
-number_of_visits = 100
+number_of_visits = 1
 
 visit_uber(number_of_visits)
-
-# in icognito mode, ran 100 times safely without triggering bot detection or 2FA
