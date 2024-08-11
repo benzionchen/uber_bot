@@ -46,7 +46,7 @@ def automate_uber_with_google_login():
                 password_input_selector = "input[type='password']"
                 page.wait_for_selector(
                     password_input_selector, state="visible")
-                page.fill(password_input_selector, "38257448")
+                page.fill(password_input_selector, "efdagflk138257448")
                 print("Password entered.")
 
                 # Click the correct "Next" button (Button 3) on the password screen
@@ -121,7 +121,7 @@ def automate_uber_with_google_login():
                     email_input_selector = "input#identifierId"
                     google_popup.click(email_input_selector)
                     google_popup.fill(email_input_selector,
-                                      "rraiubusiness@gmail.com")
+                                      "rraiutest1@gmail.com")
 
                     # Click the correct "Next" button (Button 2) on the email screen
                     next_buttons = google_popup.locator("div.VfPpkd-RLmnJb")
@@ -138,21 +138,19 @@ def automate_uber_with_google_login():
                     # Save progress after reaching the password screen
                     save_progress("password_screen")
 
-                    # Proceed to the password screen after clicking "Next button 2"
                     # Wait for the password input to be visible
                     google_popup.wait_for_selector(
                         "input[type='password']", state="visible")
-                    save_progress("password_screen")
                     print("Ready for password input.")
 
                     # Input the password
                     password_input_selector = "input[type='password']"
                     google_popup.click(password_input_selector)
-                    google_popup.fill(password_input_selector, "38257448")
+                    google_popup.fill(password_input_selector,
+                                      "efdagflk138257448")
                     print("Password entered.")
 
                     # Click "Next button 3"
-                    next_buttons = google_popup.locator("div.VfPpkd-RLmnJb")
                     if next_buttons.count() >= 3:
                         try:
                             next_buttons.nth(2).click()
