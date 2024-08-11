@@ -34,3 +34,5 @@ def visit_uber(num_visits):
 number_of_visits = 100
 
 visit_uber(number_of_visits)
+
+# in icognito mode, ran 100 times safely without triggering bot detection or 2FA
