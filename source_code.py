@@ -75,18 +75,24 @@ async def click_all_try_again_buttons(page):
                 print(f"Failed to click 'Try Again' button {i + 1}: {e}")
 
 
-async def click_next_button(page):
-    next_button_selector = "div.VfPpkd-RLmnJb"
-    next_buttons = page.locator(next_button_selector)
+async def click_all_next_buttons(page):
+    next_buttons = page.locator("div.VfPpkd-RLmnJb")
     count = await next_buttons.count()
     if count > 0:
-        try:
-            # Click the first "Next" button found
-            await next_buttons.nth(0).click()
-            print("Clicked 'Next' button on the account recovery page")
-        except Exception as e:
-            print(
-                f"Failed to click 'Next' button on the account recovery page: {e}")
+        for i in range(count):
+            try:
+                # Ensure the button is visible and enabled
+                if await next_buttons.nth(i).is_visible() and await next_buttons.nth(i).is_enabled():
+                    await next_buttons.nth(i).click()
+                    print(
+                        f"Clicked 'Next' button {i + 1} on the account recovery page")
+                    # Wait for the action to take effect
+                    await page.wait_for_timeout(3000)
+                else:
+                    print(f"'Next' button {i + 1} is not visible or enabled.")
+            except Exception as e:
+                print(
+                    f"Failed to click 'Next' button {i + 1} on the account recovery page: {e}")
     else:
         print("No 'Next' button found on the account recovery page")
 
@@ -232,12 +238,9 @@ async def automate_uber_with_google_login():
                     # Wait for the account recovery page to load
                     await google_popup.wait_for_timeout(3000)
 
-                    # Refocus on the account recovery page and check for "Next" button
-                    print(
-                        "Refocusing on the account recovery page and looking for 'Next' button...")
-                    # Ensure the account recovery page is in focus
-                    await google_popup.bring_to_front()
-                    await click_next_button(google_popup)
+                    # Check for all "Next" buttons on the account recovery page and click them
+                    print("Checking for 'Next' buttons on the account recovery page...")
+                    await click_all_next_buttons(google_popup)
 
         except Exception as e:
             print(f"Error during the process: {e}")
